@@ -1,0 +1,6 @@
+token = "cp-83ae9481-081c-4397-8617-a7c16bee55a4c41a8b7d-2fd7-4c5d-b2b9-28657c31d46b"
+vault = "main-kv-mkoldov"
+rg = "waf-rg"
+vnet_cidr = "10.108.0.0/16"
+subnet_cidr = "10.108.108.0/24"
+admin_password = "Bad Joke 1234"
