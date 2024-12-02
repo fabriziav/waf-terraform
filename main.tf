@@ -199,7 +199,7 @@ variable "token" {
 
 # random 6 digit number
 resource "random_id" "waf" {
-  byte_length = 6
+  byte_length = 4
 }
 
 # Create a public IP address
@@ -209,6 +209,15 @@ resource "azurerm_public_ip" "waf" {
   resource_group_name = azurerm_resource_group.waf.name
   allocation_method   = "Static"
   domain_name_label    = "wafpoc-${random_id.waf.hex}"
+}
+
+# output DNS name
+output "waf-dns" {
+  value = azurerm_public_ip.waf.fqdn
+}
+# and IP
+output "waf-ip" {
+  value = azurerm_public_ip.waf.ip_address
 }
 
 # # Create a Network Interface
