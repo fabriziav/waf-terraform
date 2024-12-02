@@ -25,4 +25,16 @@ az ad sp list --show-mine -o table
 az ad sp list --display-name waf-deployer -o json 
 az ad sp delete --id $(az ad sp list --display-name waf-deployer -o json | jq -r .[].id)
 
+
+### self signed cert into pfx file (for Azure Key Vault)
+
+# produde app.key+app.pem
+APPSECAPP=wafpoc-0ed1ab09.westeurope.cloudapp.azure.com
+openssl req -newkey rsa:2048 -nodes -keyout app.key -x509 -days 365 -addext "subjectAltName = DNS:${APPSECAPP}" -subj "/C=US/CN=${APPSECAPP}" -out app.pem
+
+# ispect
+openssl x509 -text -noout -in app.pem | egrep 'DNS|CN'
+# export as pfx
+openssl pkcs12 -export -out app.pfx -inkey app.key -in app.pem 
+# pwd vpn123 ;-)
 ```
