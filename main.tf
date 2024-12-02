@@ -7,6 +7,24 @@ terraform {
   }
 }
 
+provider "azurerm" {
+  # Configuration options
+  features {}
+  subscription_id = var.az_subscription
+  client_id       = var.az_clientid
+  client_secret   = var.az_clientsecret
+  tenant_id       = var.az_tenantid
+}
+
+# echo "az_clientid=$CLIENT_ID"
+# echo "az_clientsecret=$CLIENT_SECRET"
+# echo "az_tenantid=$TENANT_ID"
+# echo "az_subscription=$SUBSCRIPTION_ID"
+variable "az_clientid" {}
+variable "az_clientsecret" {}
+variable "az_tenantid" {}
+variable "az_subscription" {}
+
 variable "admin_password" {
   type = string
 }
@@ -23,11 +41,6 @@ variable "subnet_cidr" {
   // default     = "10.10.10.0/24"
 }
 
-provider "azurerm" {
-  # Configuration options
-  features {}
-  subscription_id = "f4ad5e85-ec75-4321-8854-ed7eb611f61d"
-}
 
 variable "rg" {
   type = string
@@ -105,11 +118,15 @@ variable "vault" {
   type = string
 }
 
+variable "vmsize" {
+  type = string
+}
+
 resource "azurerm_linux_virtual_machine_scale_set" "waf" {
   name                = "waf-tf-vmss"
   resource_group_name = azurerm_resource_group.waf.name
   location            = azurerm_resource_group.waf.location
-  sku                 = "Standard_DS2_v2"
+  sku                 = var.vmsize // "Standard_DS2_v2"
   instances           = 2
   overprovision = false
 
@@ -262,3 +279,8 @@ resource "azurerm_network_security_group" "waf" {
 #   network_interface_id      = azurerm_network_interface.waf.id
 #   network_security_group_id = azurerm_network_security_group.waf.id
 # }
+
+# vmss system identity
+output "vmss_identity" {
+  value = azurerm_linux_virtual_machine_scale_set.waf.identity[0].principal_id
+}
