@@ -1,13 +1,12 @@
-token = "cp-83ae9481-081xxx"
-vault = "main-kv-mkoldov"
-rg = "waf-rg"
-vnet_cidr = "10.108.0.0/16"
-subnet_cidr = "10.108.108.0/24"
-admin_password = "Bad Joke 1234"
-
-vmsize="Standard_DS2_v2"
-
-az_clientid="xxx"
-az_clientsecret="yyy"
-az_tenantid="zzz"
-az_subscription="qqq"
+az_clientid                     = "ENTER THE CLIENT (APPLICATION) ID AS DEFINED IN THE SERVICE PRINCIPAL " # "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+az_clientsecret                 = "ENTER THE CLIENT SECRET AS DEFINED IN THE SERVICE PRINCIPAL"            # "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+az_tenantid                     = "ENTER THE TENANT (DIRECTORY) ID AS DEFINED IN THE SERVICE PRINCIPAL"    # "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+az_subscription                 = "ENTER YOUR AZURE SUBSCRIPTION"                                          # "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+token                           = "ENTER THE TOKEN PROVIDED IN THE INFINITY PORTAL"                        # "cp-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+vault                           = "ENTER THE NAME OF AN EXISTING AZURE KEY VAULT"                          # "my-test-vault"
+rg                              = "ENTER THE NAME OF YOUR NEW RESOURCE GROUP"                              # "my-resource-group"
+rg_location                     = "ENTER THE REGION WHERE THE RG SHOULD BE LOCATED"                        # "switzerlandnorth", the full list of Azure regions can be found at https://azure.microsoft.com/regions
+vnet_cidr                       = "ENTER THE CIDR OF THE VNET"                                             # "10.1.0.0/16"
+subnet_cidr                     = "ENTER THE CIDR OF THE SUBNET (PART OF THE VNET ABOVE)                   # "10.1.1.0/24"
+admin_password                  = "ENTER THE ADMIN PASSWORD TO ACCESS THE AGENTS"                          # "Vpn123Vpn123" must be between 12 and 72 characters and must have 3 of the following: 1 lower case character, 1 upper case character, 1 number, and 1 special character that is not '\' or '-'.
+vmsize                          = "ENTER THE VM SIZE SKU"                                                  # "Standard_DS2_v2", for other options check: https://github.com/CheckPointSW/CloudGuardIaaS/tree/master/terraform/azure/vmss-new-vnet#:~:text=n/a-,vm_size,-Specifies%20the%20size
