@@ -46,9 +46,13 @@ variable "rg" {
   type = string
 }
 
+variable "rg_location" {
+  type = string
+}
+
 resource "azurerm_resource_group" "waf" {
   name     = var.rg
-  location = "West Europe"
+  location = var.rg_location
 }
 
 # Create a Virtual Network
