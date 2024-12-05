@@ -16,10 +16,6 @@ provider "azurerm" {
   tenant_id       = var.az_tenantid
 }
 
-# echo "az_clientid=$CLIENT_ID"
-# echo "az_clientsecret=$CLIENT_SECRET"
-# echo "az_tenantid=$TENANT_ID"
-# echo "az_subscription=$SUBSCRIPTION_ID"
 variable "az_clientid" {}
 variable "az_clientsecret" {}
 variable "az_tenantid" {}
@@ -70,53 +66,6 @@ resource "azurerm_subnet" "waf" {
   virtual_network_name = azurerm_virtual_network.waf.name
   address_prefixes     = [var.subnet_cidr]
 }
-
-# Ubuntu Linux Virtual Machine with public IP
-# resource "azurerm_linux_virtual_machine" "waf" {
-#   name                = "waf-tf-vm"
-#   resource_group_name = azurerm_resource_group.waf.name
-#   location            = azurerm_resource_group.waf.location
-#   size                = "Standard_DS2_v2"
-
-#   admin_username = "cpadmin"
-
-#   network_interface_ids = [azurerm_network_interface.waf.id]
-
-#   # admin_ssh_key {
-#   #   username   = "admin"
-#   #   public_key = file("~/.ssh/id_rsa.pub")
-#   # }
-
-#   # allow using password
-#   admin_password                  = "Bad Joke 1234"
-#   disable_password_authentication = false
-
-#   os_disk {
-#     caching              = "ReadWrite"
-#     storage_account_type = "Standard_LRS"
-#   }
-
-#   source_image_reference {
-#     publisher = "checkpoint"
-#     offer     = "infinity-gw"
-#     sku       = "infinity-img"
-#     version   = "latest"
-#   }
-
-#   plan {
-#     publisher = "checkpoint"
-#     product   = "infinity-gw"
-#     name      = "infinity-img"
-#   }
-
-
-
-#   custom_data = base64encode(
-#     templatefile("${path.module}/custom-data.sh", {
-#       token = var.token,
-#       vnet  = var.vnet_cidr
-#   }))
-# }
 
 variable "vault" {
   type = string
@@ -224,20 +173,6 @@ output "waf-ip" {
   value = azurerm_public_ip.waf.ip_address
 }
 
-# # Create a Network Interface
-# resource "azurerm_network_interface" "waf" {
-#   name                = "waf-tf-nic"
-#   location            = azurerm_resource_group.waf.location
-#   resource_group_name = azurerm_resource_group.waf.name
-
-#   ip_configuration {
-#     name                          = "waf-tf-ip-config"
-#     subnet_id                     = azurerm_subnet.waf.id
-#     private_ip_address_allocation = "Dynamic"
-#     public_ip_address_id          = azurerm_public_ip.waf.id
-#   }
-# }
-
 # Create a Network Security Group and rule
 resource "azurerm_network_security_group" "waf" {
   name                = "waf-tf-nsg"
@@ -292,12 +227,6 @@ resource "azurerm_network_security_group" "waf" {
     destination_address_prefix = "*"
   }
 }
-
-# # Associate the Network Security Group with the Network Interface
-# resource "azurerm_network_interface_security_group_association" "waf" {
-#   network_interface_id      = azurerm_network_interface.waf.id
-#   network_security_group_id = azurerm_network_security_group.waf.id
-# }
 
 # vmss system identity
 output "vmss_identity" {
