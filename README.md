@@ -48,10 +48,3 @@ As part of the deployment the following resources are created:
 - Create or modify the deployment:
  
         terraform apply
-
-
-
-## License
-
-See the [LICENSE](../../LICENSE) file for details
-
